@@ -18,7 +18,6 @@ dnf install -y git
 
 # We need to be able to run tests as a normal user, not 'root'.
 useradd -Um tracker
-chown -R tracker:tracker .
 
 # This shouldn't be needed, but currently is.
 #
