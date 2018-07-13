@@ -25,4 +25,4 @@ useradd -Um tracker
 #
 # Some of the tests also seem to interact with the session-wide Tracker
 # instance!
-- dnf install -y tracker
+dnf install -y tracker
