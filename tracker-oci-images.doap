@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Project xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+         xmlns:foaf="http://xmlns.com/foaf/0.1/"
+         xmlns:gnome="http://api.gnome.org/doap-extensions#"
+         xmlns="http://usefulinc.com/ns/doap#">
+
+  <name xml:lang="en">tracker-oci-images</name>
+  <shortdesc xml:lang="en">Container images used for the Tracker CI</shortdesc>
+  <description xml:lang="en">Container images pre-bundled with Tracker build dependancies, used in CI pipelines for Tracker and related projects</description>
+  <bug-database rdf:resource="https://gitlab.gnome.org/GNOME/tracker/issues" />
+  <maintainer>
+    <foaf:Person>
+      <foaf:name>Sam Thursfield</foaf:name>
+      <foaf:mbox rdf:resource="mailto:sam@afuera.me.uk" />
+      <gnome:userid>sthursfield</gnome:userid>
+    </foaf:Person>
+  </maintainer>
+  <maintainer>
+    <foaf:Person>
+      <foaf:name>Carlos Garnacho</foaf:name>
+      <foaf:mbox rdf:resource="mailto:carlosg@gnome.org" />
+      <gnome:userid>carlosg</gnome:userid>
+    </foaf:Person>
+  </maintainer>
+</Project>
