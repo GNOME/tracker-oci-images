@@ -13,7 +13,7 @@ dnf builddep -y tracker
 dnf install -y libseccomp-devel
 dnf builddep -y tracker-miners
 
-# Needed to clone tracker as a subproject when building tracker-miners.
+# Git is needed to clone tracker as a subproject when building tracker-miners.
 dnf install -y git
 
 # We need to be able to run tests as a normal user, not 'root'.
