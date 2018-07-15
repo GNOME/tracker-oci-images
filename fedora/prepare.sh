@@ -4,6 +4,7 @@ dnf upgrade -y
 dnf install -y 'dnf-command(builddep)' libseccomp-devel redhat-rpm-config
 
 dnf install -y meson
+dnf install -y make
 
 # Tracker dependencies
 dnf install -y dbus-devel dbus-x11 tracker
