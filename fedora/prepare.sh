@@ -27,3 +27,6 @@ useradd -Um tracker
 # Some of the tests also seem to interact with the session-wide Tracker
 # instance!
 dnf install -y tracker
+
+# This is needed for the functional-tests, sadly.
+dnf install -y python2 python2-gobject
