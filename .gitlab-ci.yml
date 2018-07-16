@@ -30,7 +30,6 @@ stages:
         - export NAMESPACE="$(echo "${CI_PROJECT_NAMESPACE}" | tr A-Z a-z)"
         - export IMAGE=${CI_REGISTRY}/${NAMESPACE}/${CI_PROJECT_NAME}/${ARCH}/${DISTRO_NAME}:${DISTRO_VER}
     <<: *base_build
-    allow_failure: true
 
 fedora:latest:
     variables:
