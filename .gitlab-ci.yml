@@ -9,7 +9,6 @@ variables:
 
 stages:
     - distro
-    - rustc
 
 # Expects $IMAGE which should be the name+tag of the registry image.
 # Expects $OCI_YML variable which should be the path to the dockerfile
