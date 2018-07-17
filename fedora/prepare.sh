@@ -9,10 +9,12 @@ dnf install -y make
 # Tracker dependencies
 dnf install -y dbus-devel dbus-x11 tracker
 dnf builddep -y tracker
+dnf install -y dconf
 
 # tracker-miners dependencies
 dnf install -y libseccomp-devel
 dnf builddep -y tracker-miners
+dnf install -y gstreamer1-plugins-good
 
 # Git is needed to clone tracker as a subproject when building tracker-miners.
 dnf install -y git
