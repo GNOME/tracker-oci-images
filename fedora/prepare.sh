@@ -7,7 +7,7 @@ dnf install -y meson
 dnf install -y make
 
 # Tracker dependencies
-dnf install -y dbus-devel dbus-x11 tracker
+dnf install -y dbus-devel dbus-x11
 dnf builddep -y tracker
 dnf install -y dconf
 
