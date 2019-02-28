@@ -32,3 +32,4 @@ dnf install -y tracker
 
 # This is needed for the functional-tests, sadly.
 dnf install -y python2 python2-gobject
+dnf install -y python3 python3-gobject
