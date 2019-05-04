@@ -32,3 +32,7 @@ dnf install -y tracker
 
 # This is needed for the functional-tests.
 dnf install -y python3-gobject
+
+# These are needed to use Address Sanitizer and Undefined Behaviour Sanitizer
+# when building for extra safety checks.
+dnf install -y libasan libubsan
