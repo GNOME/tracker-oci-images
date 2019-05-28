@@ -22,14 +22,6 @@ dnf install -y git
 # We need to be able to run tests as a normal user, not 'root'.
 useradd -Um tracker
 
-# This shouldn't be needed, but currently is.
-#
-# Some of the tests depend on the GSettings schemas being installed.
-#
-# Some of the tests also seem to interact with the session-wide Tracker
-# instance!
-dnf install -y tracker
-
 # This is needed for the functional-tests.
 dnf install -y python3-gobject
 
