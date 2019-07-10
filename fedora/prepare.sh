@@ -16,6 +16,13 @@ dnf install -y libseccomp-devel
 dnf builddep -y tracker-miners
 dnf install -y gstreamer1-plugins-good
 
+# We need libav so we can test the libav-based mediafile extractor, and so
+# we can test our support for .m4a/mp4 files.
+#
+# RPM Fusion install commands from https://rpmfusion.org/Configuration
+dnf install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+dnf install -y gstreamer1-libav
+
 # Git is needed to clone tracker as a subproject when building tracker-miners.
 dnf install -y git
 
