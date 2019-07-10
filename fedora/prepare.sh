@@ -16,6 +16,17 @@ dnf install -y libseccomp-devel
 dnf builddep -y tracker-miners
 dnf install -y gstreamer1-plugins-good
 
+# We need to test our support for .m4a/mp4. This requires the 'faad' codec,
+# which is distrubuted via rpmfusion as Red Hat considers it nonfree.
+#
+# Fedora 30 contains the fdk-aac-free codec, which would also suffice, but
+# the 'fdkaacdec' GStreamer plugin is not available in any of the packages
+# so it's not available for use by Tracker.
+#
+# RPM Fusion install commands from https://rpmfusion.org/Configuration
+dnf install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+dnf install -y gstreamer1-plugins-bad-nonfree
+
 # Git is needed to clone tracker as a subproject when building tracker-miners.
 dnf install -y git
 
