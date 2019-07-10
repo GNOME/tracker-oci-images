@@ -16,6 +16,7 @@ stages:
 .base_template: &base_build
     script:
         - cd ${DIR}
+        - docker images
         - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
         - docker build --pull -f ${OCI_YML} -t ${IMAGE} .
         - |
