@@ -1,11 +1,12 @@
-image: docker:latest
+image: docker:19.03.0
 services:
-    - docker:dind
+    - docker:19.03.0-dind
 
 # When using dind, it's wise to use the overlayfs driver for
 # improved performance.
 variables:
     DOCKER_DRIVER: overlay2
+    DOCKER_TLS_CERTDIR: ""
 
 stages:
     - distro
