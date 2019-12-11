@@ -1,4 +1,5 @@
 #!/bin/sh
+set -x
 
 dnf upgrade -y
 dnf install -y 'dnf-command(builddep)' libseccomp-devel redhat-rpm-config
