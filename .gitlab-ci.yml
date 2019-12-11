@@ -1,60 +1,57 @@
-image: docker:19.03.0
-services:
-    - docker:19.03.0-dind
-
-# When using dind, it's wise to use the overlayfs driver for
-# improved performance.
-variables:
-    DOCKER_DRIVER: overlay2
-    DOCKER_TLS_CERTDIR: ""
+image: 'registry.fedoraproject.org/fedora:30'
 
 stages:
-    - distro
+  - distro
+
+# Buildah can't use 'overlay' driver when running inside docker
+variables:
+  STORAGE_DRIVER: 'vfs'
 
 # Expects $IMAGE which should be the name+tag of the registry image.
-# Expects $OCI_YML variable which should be the path to the dockerfile
-# Expects $DIR variable which should be the name of the parrent folder of the dockerfile
-.base_template: &base_build
-    script:
-        - cd ${DIR}
-        - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
-        - docker build --pull -f ${OCI_YML} -t ${IMAGE} .
-        - docker images
-        - |
-          if [ "$CI_COMMIT_REF_NAME" = "master" ]; then
-              docker push ${IMAGE}
-          else
-              echo "Not pushing image, as we are on non-master branch $CI_COMMIT_REF_NAME"
-          fi
+# Expects $DOCKERFILE variable which should be the path to the dockerfile
+# Expects $CONTEXT_DIR variable which should be the name of the parrent folder of the dockerfile
+.base:
+  script:
+    - dnf install -y buildah podman
+    - buildah login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+
+    # Newer versions of podman/buildah try to set overlayfs mount options when
+    # using the vfs driver, and this causes errors.
+    - sed -i '/^mountopt =.*/d' /etc/containers/storage.conf
+
+    - podman build --format=docker --pull -f ${DOCKERFILE} -t ${IMAGE} ${CONTEXT_DIR}
+    - podman push ${IMAGE}
 
 # Expects $ARCH variable which should be the architexcture of the image ex. x86_64
 # Expects $DISTRO_NAME variable which should be the name of the distro image ex. ubuntu
 # Expects $DISTRO_VER variable which should be the version distro image ex. 18.04
-# Expects $OCI_YML variable which should be the path to the dockerfile
-.distro_template: &distro_build
-    stage: distro
-    before_script:
-        - export NAMESPACE="$(echo "${CI_PROJECT_NAMESPACE}" | tr A-Z a-z)"
-        - export IMAGE=${CI_REGISTRY}/${NAMESPACE}/${CI_PROJECT_NAME}/${ARCH}/${DISTRO_NAME}:${DISTRO_VER}
-    interruptible: true
-    <<: *base_build
+# Expects $DOCKERFILE variable which should be the path to the dockerfile
+.distro build:
+  stage: distro
+  before_script:
+    - export IMAGE=${CI_REGISTRY_IMAGE}/${ARCH}/${DISTRO_NAME}:${DISTRO_VER}
+  extends: '.base'
 
-fedora:latest:
-    variables:
-      ARCH: "amd64"
-      DISTRO_NAME: "fedora"
-      DISTRO_VER: "latest"
-      OCI_YML: "latest.yml"
-      DIR: "fedora"
-
-    <<: *distro_build
+fedora latest:
+  extends: '.distro build'
+  variables:
+    ARCH: "amd64"
+    DISTRO_NAME: "fedora"
+    DISTRO_VER: "latest"
+    DOCKERFILE: "fedora/latest"
+    CONTEXT_DIR: "fedora"
+  only:
+    changes:
+      - 'fedora/*'
 
 ubuntu:rolling:
-    variables:
-      ARCH: "amd64"
-      DISTRO_NAME: "ubuntu"
-      DISTRO_VER: "rolling"
-      OCI_YML: "ubuntu-rolling"
-      DIR: "debian"
-
-    <<: *distro_build
+  extends: '.distro build'
+  variables:
+    ARCH: "amd64"
+    DISTRO_NAME: "ubuntu"
+    DISTRO_VER: "rolling"
+    DOCKERFILE: "debian/ubuntu-rolling"
+    CONTEXT_DIR: "debian"
+  only:
+    changes:
+      - 'debian/*'
