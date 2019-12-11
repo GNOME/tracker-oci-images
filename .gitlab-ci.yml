@@ -20,7 +20,13 @@ variables:
     - sed -i '/^mountopt =.*/d' /etc/containers/storage.conf
 
     - podman build --cgroup-manager=cgroupfs --format=docker --pull -f ${DOCKERFILE} -t ${IMAGE} ${CONTEXT_DIR}
-    - podman push --creds $CI_REGISTRY_USER:$CI_REGISTRY_PASSWORD ${IMAGE}
+
+    - |
+      if [ "$CI_COMMIT_REF_NAME" = "master" ]; then
+          podman push --creds $CI_REGISTRY_USER:$CI_REGISTRY_PASSWORD ${IMAGE}
+      else
+          echo "Not pushing image, as we are on non-master branch $CI_COMMIT_REF_NAME"
+      fi
 
 # Expects $ARCH variable which should be the architexcture of the image ex. x86_64
 # Expects $DISTRO_NAME variable which should be the name of the distro image ex. ubuntu
