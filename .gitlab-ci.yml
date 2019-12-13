@@ -47,3 +47,13 @@ fedora:latest:
       DIR: "fedora"
 
     <<: *distro_build
+
+ubuntu:rolling:
+    variables:
+      ARCH: "amd64"
+      DISTRO_NAME: "ubuntu"
+      DISTRO_VER: "rolling"
+      OCI_YML: "ubuntu-rolling"
+      DIR: "debian"
+
+    <<: *distro_build
