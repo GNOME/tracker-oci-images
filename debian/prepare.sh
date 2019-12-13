@@ -7,6 +7,9 @@ apt-get -yq update && apt-get -yq upgrade
 
 apt-get -yq build-dep tracker tracker-miners
 
+# Git is needed to clone tracker as a subproject when building tracker-miners.
+apt-get -yq install git
+
 # For rss miner, which I guess Debian/Ubuntu disable by default
 apt-get -yq install libgrss-dev
 
