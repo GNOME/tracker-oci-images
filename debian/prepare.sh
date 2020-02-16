@@ -15,3 +15,8 @@ apt-get -yq install libgrss-dev
 
 # We need to be able to run tests as a normal user, not 'root'.
 useradd -Um tracker
+
+# To speed up Tracker 2.x tests.
+#
+# See https://gitlab.gnome.org/GNOME/tracker/merge_requests/176
+apt-get install -y eatmydata

@@ -36,3 +36,13 @@ dnf install -y python3-gobject
 # These are needed to use Address Sanitizer and Undefined Behaviour Sanitizer
 # when building for extra safety checks.
 dnf install -y libasan libubsan
+
+# This is to speed up the tests. See:
+# https://gitlab.gnome.org/GNOME/tracker/merge_requests/176
+curl --get 'https://www.flamingspork.com/projects/libeatmydata/libeatmydata-105.tar.gz' --output libeatmydata-105.tar.gz
+tar -x -f ./libeatmydata-105.tar.gz
+cd libeatmydata-105
+./configure --prefix=/usr
+make install
+sed -e 's@shlib="/usr/lib/$DEB_BUILD_MULTIARCH/eatmydata.sh@shlib="/usr/libexec/eatmydata.sh@' -i /usr/bin/eatmydata
+cd ..
