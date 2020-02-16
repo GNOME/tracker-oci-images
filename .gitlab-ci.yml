@@ -38,6 +38,18 @@ variables:
     - export IMAGE=${CI_REGISTRY_IMAGE}/${ARCH}/${DISTRO_NAME}:${DISTRO_VER}
   extends: '.base'
 
+alpine edge:
+  extends: '.distro build'
+  variables:
+    ARCH: "amd64"
+    DISTRO_NAME: "alpine"
+    DISTRO_VER: "edge"
+    DOCKERFILE: "alpine/edge"
+    CONTEXT_DIR: "alpine"
+  only:
+    changes:
+      - 'alpine/*'
+
 fedora latest:
   extends: '.distro build'
   variables:
