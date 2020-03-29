@@ -11,6 +11,7 @@ dnf install -y make
 dnf install -y dbus-devel dbus-x11
 dnf builddep -y tracker
 dnf install -y dconf
+dnf install -y asciidoc
 
 # tracker-miners dependencies
 dnf install -y libseccomp-devel
