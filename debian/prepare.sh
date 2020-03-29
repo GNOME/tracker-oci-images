@@ -7,6 +7,9 @@ apt-get -yq update && apt-get -yq upgrade
 
 apt-get -yq build-dep tracker tracker-miners
 
+# For building manpages and website.
+apt-get -yq asciidoc-base
+
 # Git is needed to clone tracker as a subproject when building tracker-miners.
 apt-get -yq install git
 
