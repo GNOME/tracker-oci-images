@@ -45,5 +45,6 @@ tar -x -f ./libeatmydata-105.tar.gz
 cd libeatmydata-105
 ./configure --prefix=/usr
 make install
+sed -e '/dpkg-architecture/ d' -i /usr/bin/eatmydata
 sed -e 's@shlib="/usr/lib/$DEB_BUILD_MULTIARCH/eatmydata.sh@shlib="/usr/libexec/eatmydata.sh@' -i /usr/bin/eatmydata
 cd ..
