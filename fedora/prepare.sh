@@ -22,8 +22,12 @@ dnf install -y gstreamer1-plugins-good
 # we can test our support for .m4a/mp4 files.
 #
 # RPM Fusion install commands from https://rpmfusion.org/Configuration
+#
+# We ignore the weak dependencies of this package, which include compiler-rt, pocl
+# and mesa-libOpenCL -- these pull in the Clang/LLVM toolchain. Excluding them
+# saves 300MB of image size.
 dnf install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
-dnf install -y gstreamer1-libav
+dnf install -y --setopt=install_weak_deps=False gstreamer1-libav
 
 # Git is needed to clone tracker as a subproject when building tracker-miners.
 dnf install -y git
