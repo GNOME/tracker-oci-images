@@ -1,14 +1,18 @@
 #!/bin/sh
 
-# Enable source repositories so we can use `apt-get build-dep`
+set -ex
 
+# Avoid interactive prompts!
+export DEBIAN_FRONTEND=noninteractive
+
+# Enable source repositories so we can use `apt-get build-dep`
 sed -Ei 's/^# deb-src /deb-src /' /etc/apt/sources.list
 apt-get -yq update && apt-get -yq upgrade
 
 apt-get -yq build-dep tracker tracker-miners
 
 # For building manpages and website.
-apt-get -yq asciidoc-base
+apt-get -yq install --no-install-recommends asciidoc-base
 
 # Git is needed to clone tracker as a subproject when building tracker-miners.
 apt-get -yq install git
