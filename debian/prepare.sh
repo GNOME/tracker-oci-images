@@ -2,8 +2,10 @@
 
 set -ex
 
-# Enable source repositories so we can use `apt-get build-dep`
+# Avoid interactive prompts!
+export DEBIAN_FRONTEND=noninteractive
 
+# Enable source repositories so we can use `apt-get build-dep`
 sed -Ei 's/^# deb-src /deb-src /' /etc/apt/sources.list
 apt-get -yq update && apt-get -yq upgrade
 
