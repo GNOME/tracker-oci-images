@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -ex
+
 # Enable source repositories so we can use `apt-get build-dep`
 
 sed -Ei 's/^# deb-src /deb-src /' /etc/apt/sources.list
