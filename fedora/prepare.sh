@@ -56,3 +56,5 @@ make install
 sed -e '/dpkg-architecture/ d' -i /usr/bin/eatmydata
 sed -e 's@shlib="/usr/lib/$DEB_BUILD_MULTIARCH/eatmydata.sh@shlib="/usr/libexec/eatmydata.sh@' -i /usr/bin/eatmydata
 cd ..
+rm ./libeatmydata-105.tar.gz
+rm -Rf ./libeatmydata-105
