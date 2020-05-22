@@ -11,6 +11,9 @@ apt-get -yq update && apt-get -yq upgrade
 
 apt-get -yq build-dep tracker tracker-miners
 
+# Test suite dependencies
+apt-get -yq install libumockdev-dev
+
 # For building manpages and website.
 apt-get -yq install --no-install-recommends asciidoc-base
 
