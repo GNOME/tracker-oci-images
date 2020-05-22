@@ -30,14 +30,14 @@ dnf install -y gstreamer1-plugins-good
 dnf install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 dnf install -y --setopt=install_weak_deps=False gstreamer1-libav
 
+# Test suite dependencies
+dnf install -y python3-gobject umockdev-devel
+
 # Git is needed to clone tracker as a subproject when building tracker-miners.
 dnf install -y git
 
 # We need to be able to run tests as a normal user, not 'root'.
 useradd -Um tracker
-
-# This is needed for the functional-tests.
-dnf install -y python3-gobject
 
 # These are needed to use Address Sanitizer and Undefined Behaviour Sanitizer
 # when building for extra safety checks.
