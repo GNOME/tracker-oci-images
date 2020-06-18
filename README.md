@@ -22,3 +22,10 @@ You can also try out images on your local machine. Here is an example which
 opens a shell inside a Docker container:
 
     docker run -i -t registry.gitlab.gnome.org/gnome/tracker-oci-images/amd64/fedora:latest /bin/bash
+
+# Related projects
+
+[librsvg-oci-images](https://gitlab.gnome.org/GNOME/tracker/-/issues/218), on which this project is based.
+
+[Freedesktop CI Templates](https://freedesktop.pages.freedesktop.org/ci-templates/templates.html), a
+system for building base CI images on [gitlab.freedesktop.org](https://gitlab.freedesktop.org/).
