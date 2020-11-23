@@ -11,7 +11,7 @@ variables:
 # Expects $DOCKERFILE variable which should be the path to the dockerfile
 # Expects $CONTEXT_DIR variable which should be the name of the parrent folder of the dockerfile
 .base:
-  tags: [ privileged ]
+  tags: [ ]
   script:
     - dnf install -y buildah podman
     - buildah login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
