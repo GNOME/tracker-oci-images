@@ -1,11 +1,13 @@
-image: 'registry.fedoraproject.org/fedora:30'
+image: 'registry.fedoraproject.org/fedora:32'
 
 stages:
   - distro
 
 # Buildah can't use 'overlay' driver when running inside docker
 variables:
-  STORAGE_DRIVER: 'vfs'
+  STORAGE_DRIVER: vfs
+  BUILDAH_FORMAT: docker
+  BUILDAH_ISOLATION: chroot
 
 # Expects $IMAGE which should be the name+tag of the registry image.
 # Expects $DOCKERFILE variable which should be the path to the dockerfile
@@ -20,7 +22,7 @@ variables:
     # using the vfs driver, and this causes errors.
     - sed -i '/^mountopt =.*/d' /etc/containers/storage.conf
 
-    - podman build --cgroup-manager=cgroupfs --format=docker --pull -f ${DOCKERFILE} -t ${IMAGE} ${CONTEXT_DIR}
+    - buildah bud -f ${DOCKERFILE} -t ${IMAGE}
 
     # Show image size.
     - podman image list
