@@ -37,3 +37,5 @@ RUN dnf remove -y tracker && \
     rm -R /root/*
 
 RUN useradd -Um tracker
+USER tracker
+WORKDIR /home/tracker

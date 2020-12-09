@@ -16,3 +16,5 @@ RUN apt-get -yq remove libtracker-sparql-3.0-0 && \
     rm -R /root/*
 
 RUN useradd -Um tracker
+USER tracker
+WORKDIR /home/tracker

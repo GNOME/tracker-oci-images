@@ -24,3 +24,5 @@ RUN apk add -U autoconf automake libtool && \
 
 RUN addgroup -S tracker && \
     adduser -D -G tracker -g tracker tracker
+USER tracker
+WORKDIR /home/tracker
