@@ -23,6 +23,6 @@ RUN dnf remove -y tracker && \
     dnf clean all && \
     rm -R /root/*
 
-RUN useradd -Um tracker
+RUN useradd --groups wheel --create-home --shell /bin/bash --user-group tracker
 USER tracker
 WORKDIR /home/tracker
