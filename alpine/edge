@@ -1,6 +1,0 @@
-FROM alpine:edge
-
-COPY prepare.sh cleanup.sh /root/
-
-RUN /bin/sh /root/prepare.sh && \
-    /bin/sh /root/cleanup.sh

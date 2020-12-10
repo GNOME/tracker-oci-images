@@ -1,17 +1,19 @@
-image: 'registry.fedoraproject.org/fedora:30'
+image: 'registry.fedoraproject.org/fedora:32'
 
 stages:
   - distro
 
 # Buildah can't use 'overlay' driver when running inside docker
 variables:
-  STORAGE_DRIVER: 'vfs'
+  STORAGE_DRIVER: vfs
+  BUILDAH_FORMAT: docker
+  BUILDAH_ISOLATION: chroot
 
 # Expects $IMAGE which should be the name+tag of the registry image.
 # Expects $DOCKERFILE variable which should be the path to the dockerfile
 # Expects $CONTEXT_DIR variable which should be the name of the parrent folder of the dockerfile
 .base:
-  tags: [ privileged ]
+  tags: [ ]
   script:
     - dnf install -y buildah podman
     - buildah login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
@@ -20,7 +22,7 @@ variables:
     # using the vfs driver, and this causes errors.
     - sed -i '/^mountopt =.*/d' /etc/containers/storage.conf
 
-    - podman build --cgroup-manager=cgroupfs --format=docker --pull -f ${DOCKERFILE} -t ${IMAGE} ${CONTEXT_DIR}
+    - buildah bud -f ${DOCKERFILE} -t ${IMAGE}
 
     # Show image size.
     - podman image list
@@ -48,7 +50,7 @@ alpine edge:
     ARCH: "amd64"
     DISTRO_NAME: "alpine"
     DISTRO_VER: "edge"
-    DOCKERFILE: "alpine/edge"
+    DOCKERFILE: "alpine/edge.Dockerfile"
     CONTEXT_DIR: "alpine"
   only:
     changes:
@@ -60,7 +62,7 @@ fedora latest:
     ARCH: "amd64"
     DISTRO_NAME: "fedora"
     DISTRO_VER: "latest"
-    DOCKERFILE: "fedora/latest"
+    DOCKERFILE: "fedora/latest.Dockerfile"
     CONTEXT_DIR: "fedora"
   only:
     changes:
@@ -72,7 +74,7 @@ fedora rawhide:
     ARCH: "amd64"
     DISTRO_NAME: "fedora"
     DISTRO_VER: "rawhide"
-    DOCKERFILE: "fedora/rawhide"
+    DOCKERFILE: "fedora/rawhide.Dockerfile"
     CONTEXT_DIR: "fedora"
   only:
     changes:
@@ -84,7 +86,7 @@ ubuntu:rolling:
     ARCH: "amd64"
     DISTRO_NAME: "ubuntu"
     DISTRO_VER: "rolling"
-    DOCKERFILE: "debian/ubuntu-rolling"
+    DOCKERFILE: "debian/ubuntu-rolling.Dockerfile"
     CONTEXT_DIR: "debian"
   only:
     changes:
