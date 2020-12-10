@@ -54,7 +54,7 @@ alpine edge:
     CONTEXT_DIR: "alpine"
   only:
     changes:
-      - 'alpine/*'
+      - 'alpine/edge.Dockerfile'
 
 fedora latest:
   extends: '.distro build'
@@ -66,7 +66,7 @@ fedora latest:
     CONTEXT_DIR: "fedora"
   only:
     changes:
-      - 'fedora/*'
+      - 'fedora/latest.Dockerfile'
 
 fedora rawhide:
   extends: '.distro build'
@@ -78,7 +78,7 @@ fedora rawhide:
     CONTEXT_DIR: "fedora"
   only:
     changes:
-      - 'fedora/*'
+      - 'fedora/rawhide.Dockerfile'
 
 ubuntu:rolling:
   extends: '.distro build'
@@ -90,4 +90,4 @@ ubuntu:rolling:
     CONTEXT_DIR: "debian"
   only:
     changes:
-      - 'debian/*'
+      - 'debian/ubuntu-rolling.Dockerfile'
