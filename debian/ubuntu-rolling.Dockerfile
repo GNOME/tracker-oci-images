@@ -10,10 +10,9 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
     apt-get -yq install libgrss-dev && \
     apt-get -yq install eatmydata
 
-RUN apt-get -yq remove libtracker-sparql-3.0-0 && \
+RUN apt-get -yq remove libtracker-sparql-2.0-0 && \
     apt-get clean && \
-    rm -rf /var/lib/apt/lists && \
-    rm -R /root/*
+    rm -rf /var/lib/apt/lists
 
 RUN useradd -Um tracker
 USER tracker
