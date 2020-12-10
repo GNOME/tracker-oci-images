@@ -6,8 +6,8 @@ RUN dnf upgrade -y && \
     dnf builddep -y tracker tracker-miners && \
     dnf install -y asciidoc dbus-devel dbus-x11 dconf meson make gstreamer1-plugins-good libseccomp-devel
 
-# test suite and website dependencies
-RUN dnf install -y git libasan libubsan python3-gobject python3-pip umockdev-devel xmlto
+# test suite, Coverity and website dependencies
+RUN dnf install -y clang gcovr git libasan libubsan python3-gobject python3-pip umockdev-devel xmlto
 
 # We need libav so we can test the libav-based mediafile extractor, and so
 # we can test our support for .m4a/mp4 files.
