@@ -5,8 +5,9 @@ RUN dnf upgrade -y && \
     dnf install -y 'dnf-command(builddep)' redhat-rpm-config && \
     dnf builddep -y tracker tracker-miners
 
-# test suite and website dependencies
-RUN dnf install -y git libasan libubsan python3-gobject python3-pip umockdev-devel xmlto
+# test suite dependencies
+RUN dnf install -y git libasan libubsan python3-gobject python3-pip umockdev-devel xmlto && \
+    pip3 install tap.py
 
 # We need libav so we can test the libav-based mediafile extractor, and so
 # we can test our support for .m4a/mp4 files.
