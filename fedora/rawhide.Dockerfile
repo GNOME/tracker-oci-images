@@ -3,7 +3,7 @@ FROM registry.fedoraproject.org/fedora:rawhide
 # tracker and tracker-miners build deps
 RUN dnf upgrade -y && \
     dnf install -y 'dnf-command(builddep)' redhat-rpm-config && \
-    dnf builddep -y tracker tracker-miners
+    dnf builddep -y tracker3 tracker3-miners
 
 # test suite dependencies
 RUN dnf install -y git libasan libubsan python3-gobject python3-pip umockdev-devel xmlto && \
@@ -19,6 +19,19 @@ RUN dnf install -y git libasan libubsan python3-gobject python3-pip umockdev-dev
 # saves 300MB of image size.
 RUN dnf install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm && \
     dnf install -y --setopt=install_weak_deps=False gstreamer1-libav
+
+# This is to speed up the tests. See:
+# https://gitlab.gnome.org/GNOME/tracker/merge_requests/176
+RUN curl --get 'https://www.flamingspork.com/projects/libeatmydata/libeatmydata-105.tar.gz' --output libeatmydata-105.tar.gz && \
+    tar -x -f ./libeatmydata-105.tar.gz && \
+    cd libeatmydata-105 && \
+    ./configure --prefix=/usr && \
+    make install && \
+    sed -e '/dpkg-architecture/ d' -i /usr/bin/eatmydata && \
+    sed -e 's@shlib="/usr/lib/$DEB_BUILD_MULTIARCH/eatmydata.sh@shlib="/usr/libexec/eatmydata.sh@' -i /usr/bin/eatmydata && \
+    cd .. && \
+    rm ./libeatmydata-105.tar.gz && \
+    rm -Rf ./libeatmydata-105
 
 RUN dnf remove -y tracker && \
     dnf clean all && \
