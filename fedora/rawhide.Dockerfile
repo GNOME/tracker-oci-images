@@ -3,7 +3,7 @@ FROM registry.fedoraproject.org/fedora:rawhide
 # tracker and tracker-miners build deps
 RUN dnf upgrade -y && \
     dnf install -y 'dnf-command(builddep)' redhat-rpm-config && \
-    dnf builddep -y tracker tracker-miners
+    dnf builddep -y tracker3 tracker3-miners
 
 # test suite dependencies
 RUN dnf install -y git libasan libubsan python3-gobject python3-pip umockdev-devel xmlto && \
