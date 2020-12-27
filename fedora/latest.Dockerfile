@@ -1,10 +1,11 @@
 FROM registry.fedoraproject.org/fedora:latest
 
-# tracker and tracker-miners build deps
+# tracker, tracker-miners and libmediaart build deps
 RUN dnf upgrade -y && \
     dnf install -y 'dnf-command(builddep)' redhat-rpm-config && \
     dnf builddep -y tracker tracker-miners && \
-    dnf install -y asciidoc dbus-devel dbus-x11 dconf meson make gstreamer1-plugins-good libseccomp-devel
+    dnf install -y asciidoc dbus-devel dbus-x11 dconf meson make gstreamer1-plugins-good libseccomp-devel && \
+    dnf install -y gdk-pixbuf2-devel
 
 # test suite, Coverity and website dependencies
 RUN dnf install -y clang gcovr git libasan libubsan python3-gobject python3-pip umockdev-devel xmlto && \

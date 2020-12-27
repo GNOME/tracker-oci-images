@@ -1,10 +1,11 @@
 FROM registry.fedoraproject.org/fedora:rawhide
 
-# tracker and tracker-miners build deps
+# tracker, tracker-miners and libmediaart build deps
 RUN dnf upgrade -y && \
     dnf install -y 'dnf-command(builddep)' redhat-rpm-config && \
     dnf builddep -y tracker3 tracker3-miners && \
-    dnf install -y gstreamer1-plugins-good
+    dnf install -y gstreamer1-plugins-good && \
+    dnf install -y gdk-pixbuf2-devel
 
 # test suite dependencies
 RUN dnf install -y git libasan libubsan python3-gobject python3-pip umockdev-devel xmlto && \
